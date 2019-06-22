@@ -25,8 +25,8 @@ async function createWindow () {
   // and load the index.html of the app.
   jsonfile.readFile(file, async function (err, obj) {
     if (err) console.error(err)
-    let valid = await launch.Authenticator.validate(obj.access_token & 'i')
-    if(true){
+    let valid = await launch.Authenticator.validate(obj.access_token)
+    if(valid){
       global.index()
     }else{
       mainWindow.loadFile('login.html')

@@ -38,28 +38,12 @@ var deleteFolderRecursive = function(path) {
       fs.rmdirSync(path);
     }
   };
-const refreshAuth = async () => {
-    let auth = await Authenticator.getAuth('redacted')
-    jsonfile.writeFile(file, auth, function (err) {
-        if (err) console.error(err)
-    })  
-}
 const downloadModpack = async () => {
     await download(`${github}/archive/master.zip`, './', {extract: true})
     await fse.copy('./sanctuary-modpack-master', './m')
     deleteFolderRecursive('./sanctuary-modpack-master')
 }
 const play = async (version_id, alloc) =>{
-    await jsonfile.readFile(file, async function (err, obj) {
-        // if (err) console.error(err)
-        if(obj === undefined){
-            await refreshAuth()
-        }
-        let valid = await Authenticator.validate(obj.access_token)
-        if(valid === false){
-            await refreshAuth()
-        }
-      })
     let meta = await Version.updateVersionMeta()
     meta = meta.versions;
     let = specific_meta = meta.find((m) => m.id === version_id)
@@ -76,7 +60,6 @@ const play = async (version_id, alloc) =>{
     let new_ver = await fetch(version_url)
     new_ver = await new_ver.json()
     if(current_ver.id != new_ver.id){
-        console.log(current_ver.id, new_ver.id)
         await downloadModpack()
     }
 
