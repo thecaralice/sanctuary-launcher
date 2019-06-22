@@ -9,11 +9,11 @@ const email = document.getElementById('email')
 const password = document.getElementById('password')
 const file = 'user_cache.json';
 
-// if(!fs.existsSync(file)){
-//     jsonfile.writeFile(file, {access_token: 'token'}, function (err) {
-//         if (err) console.error(err)
-//     })
-// }
+if(!fs.existsSync(file)){
+    jsonfile.writeFileSync(file, {access_token: 'token'}, function (err) {
+        if (err) console.error(err)
+    })
+}
 login_button.addEventListener('click',async  () =>{
     var _return = false;
     email.classList.remove('is-danger')
@@ -30,18 +30,15 @@ login_button.addEventListener('click',async  () =>{
     await jsonfile.readFile(file, async function (err, obj) {
         if(obj === undefined){
             let auth = await Authenticator.getAuth(email.value, password.value)
-            await jsonfile.writeFile(file, auth, function (err) {
-                if (err) console.error(err)
-            })          
+            await jsonfile.writeFile(file, auth)
+            remote.getGlobal('index')()
+
         }
         let valid = await Authenticator.validate(obj.access_token)
         if(valid === false){
             let auth = await Authenticator.getAuth(email.value, password.value)
-            await jsonfile.writeFile(file, auth, function (err) {
-                if (err) console.error(err)
-            })          
+            await jsonfile.writeFile(file, auth)
+            remote.getGlobal('index')()
         }
     })
-    await wait(250)
-    // remote.getGlobal('index')()
 })
