@@ -19,6 +19,7 @@
     "fs-extra": "^8.0.1",
     "jsonfile": "^5.0.0",
     "minecraft-launcher-core": "^3.5.0",
+    "node-fetch": "^2.6.0",
     "prismarine-tokens": "^1.0.3",
     "ts-minecraft": "^5.2.1",
     "waait": "^1.0.5"
