@@ -4,13 +4,15 @@ const {
 } = require('minecraft-launcher-core');
 const { Version } = require('ts-minecraft');
 const download = require('download');
-
+var fetchUrl = require("fetch").fetchUrl;
 const fs = require('fs')
 const fse = require('fs-extra')
 const jsonfile = require('jsonfile');
 const EventEmitter = require('events').EventEmitter;
 var em = new EventEmitter();
 const file = 'user_cache.json';
+const version = './m/version.json';
+
 function getPlatform(){
     switch (process.platform) {
         case 'win32':
@@ -35,10 +37,15 @@ var deleteFolderRecursive = function(path) {
     }
   };
 const refreshAuth = async () => {
-    let auth = await Authenticator.getAuth('srhaviar')
+    let auth = await Authenticator.getAuth('redacted')
     jsonfile.writeFile(file, auth, function (err) {
         if (err) console.error(err)
     })
+}
+const downloadModpack = async () => {
+    await download('https://github.com/HexiaLabs/sanctuary-modpack/archive/master.zip', './', {extract: true})
+    await fse.copy('./sanctuary-modpack-master', './m')
+    deleteFolderRecursive('./sanctuary-modpack-master')
 }
 const play = async (version_id, alloc) =>{
     await jsonfile.readFile(file, async function (err, obj) {
@@ -63,9 +70,14 @@ const play = async (version_id, alloc) =>{
     }else{
         console.log('Forge already exists.')
     }
-    await download('https://github.com/HexiaLabs/sanctuary-modpack/archive/master.zip', './', {extract: true})
-    await fse.copy('./sanctuary-modpack-master', './m')
-    deleteFolderRecursive('./sanctuary-modpack-master')
+    await jsonfile.readFile(version, async function (err, obj) {
+        fetchUrl("https://raw.githubusercontent.com/HexiaLabs/sanctuary-modpack/master/version.json", function(error, meta, body){
+            if(JSON.parse(body.toString()) !== obj){
+                downloadModpack()
+            }
+        });
+    })    
+
     let opts = {
         clientPackage: null,
         authorization: jsonfile.readFileSync(file),
