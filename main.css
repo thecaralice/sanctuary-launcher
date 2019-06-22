@@ -1,0 +1,11 @@
+html, body {  
+    overflow: hidden;
+    font-family: 'Varela Round', sans-serif;
+}
+input, a, button {
+    font-family: 'Varela Round', sans-serif;
+}
+#conk {
+    padding-left: 30px;
+    padding-right: 30px;
+}

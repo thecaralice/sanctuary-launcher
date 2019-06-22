@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Sanctuary Launcher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <link rel="stylesheet" href="node_modules/bulma-slider/dist/css/bulma-slider.min.css">
+    <script src="node_modules/bulma-slider/dist/js/bulma-slider.min.js"></script>    
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+      <div class="container" id="conk">
+
+          <!-- <a class="button is-primary is-large"><i style="padding-right: 5px" class="fas fa-download"></i>Download</a> -->
+          <h3 class="subtitle is-6">Max Memory Allocation</h3>
+          <input id="max" class="slider is-medium is-fullwidth" step="1024" min="1024" max="8192" value="1024" type="range">
+          <h3 class="subtitle is-6" id="amount">1024MB</h3>
+
+          <a id="launch" class="button is-primary is-large"><i style="padding-right: 5px" class="fas fa-paper-plane"></i>Launch</a>
+        </div>
+    <script src="./renderer.js"></script>
+
+  </body>
+</html>

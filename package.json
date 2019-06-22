@@ -1,0 +1,25 @@
+{
+  "name": "sanctuary",
+  "version": "0.0.1",
+  "description": "Sanctuary miencraft modpack launcher.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "myamiii",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^5.0.4"
+  },
+  "dependencies": {
+    "bulma-slider": "^2.0.0",
+    "download": "^7.1.0",
+    "electron-settings": "^3.2.0",
+    "fs-extra": "^8.0.1",
+    "jsonfile": "^5.0.0",
+    "minecraft-launcher-core": "^3.5.0",
+    "prismarine-tokens": "^1.0.3",
+    "ts-minecraft": "^5.2.1",
+    "waait": "^1.0.5"
+  }
+}
