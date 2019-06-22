@@ -9,11 +9,11 @@ const email = document.getElementById('email')
 const password = document.getElementById('password')
 const file = 'user_cache.json';
 
-if(!fs.existsSync(file)){
-    await jsonfile.writeFile(file, {access_token: 'token'}, function (err) {
-        if (err) console.error(err)
-    })
-}
+// if(!fs.existsSync(file)){
+//     jsonfile.writeFile(file, {access_token: 'token'}, function (err) {
+//         if (err) console.error(err)
+//     })
+// }
 login_button.addEventListener('click',async  () =>{
     var _return = false;
     email.classList.remove('is-danger')
@@ -43,5 +43,5 @@ login_button.addEventListener('click',async  () =>{
         }
     })
     await wait(250)
-    remote.getGlobal('index')()
+    // remote.getGlobal('index')()
 })

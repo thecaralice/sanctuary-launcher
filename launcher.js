@@ -11,7 +11,7 @@ const jsonfile = require('jsonfile');
 const EventEmitter = require('events').EventEmitter;
 var em = new EventEmitter();
 const file = 'user_cache.json';
-const version = './m/version.json';
+const version = './.minecraft/version.json';
 const forge_link = 'https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.12.2-14.23.5.2838/forge-1.12.2-14.23.5.2838-universal.jar'
 const github = 'https://github.com/HexiaLabs/sanctuary-modpack'
 const version_url = 'https://raw.githubusercontent.com/HexiaLabs/sanctuary-modpack/master/version.json'
@@ -25,29 +25,17 @@ function getPlatform(){
             return 'linux'
     }
 }
-var deleteFolderRecursive = function(path) {
-    if( fs.existsSync(path) ) {
-      fs.readdirSync(path).forEach(function(file,index){
-        var curPath = path + "/" + file;
-        if(fs.lstatSync(curPath).isDirectory()) { // recurse
-          deleteFolderRecursive(curPath);
-        } else { // delete file
-          fs.unlinkSync(curPath);
-        }
-      });
-      fs.rmdirSync(path);
-    }
-  };
 const downloadModpack = async () => {
     await download(`${github}/archive/master.zip`, './', {extract: true})
-    await fse.copy('./sanctuary-modpack-master', './m')
-    deleteFolderRecursive('./sanctuary-modpack-master')
+    await fse.copy('./sanctuary-modpack-master', './.minecraft')
+    await fse.emptyDir('./sanctuary-modpack-master')
+    await fse.remove('./sanctuary-modpack-master')
 }
 const play = async (version_id, alloc) =>{
     let meta = await Version.updateVersionMeta()
     meta = meta.versions;
     let = specific_meta = meta.find((m) => m.id === version_id)
-    await Version.install('client', specific_meta, './m/');
+    await Version.install('client', specific_meta, './.minecraft');
     if(!fs.existsSync('forge.jar')){
         console.log('Downloading forge.')
         await download(forge_link).then(data => {
@@ -66,7 +54,7 @@ const play = async (version_id, alloc) =>{
     let opts = {
         clientPackage: null,
         authorization: jsonfile.readFileSync(file),
-        root: "./m",
+        root: "./.minecraft",
         forge: "forge.jar",
         os: getPlatform(),
         version: {
